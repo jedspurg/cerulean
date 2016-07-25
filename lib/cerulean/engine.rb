@@ -1,9 +1,8 @@
 module Cerulean
   class Engine
-    class ConfigReader
-      def config(name, type, options = {})
-        setting = ConfigSetting.new(name, type, options)
-        Engine.register_setting setting
+    class SettingReader
+      def setting(name, type, options = {})
+        Engine.register_setting ConfigSetting.new(name, type, options)
       end
     end
 
@@ -12,9 +11,9 @@ module Cerulean
     end
 
     def self.load(path: 'config/cerulean_settings.rb')
-      raise ConfigurationNotFound, "No such file '#{path}'" unless File.exist?(path)
+      raise SettingFileNotFound, "No such file '#{path}'" unless File.exist?(path)
       clear_settings
-      ConfigReader.new.instance_eval(File.read(path))
+      SettingReader.new.instance_eval(File.read(path))
     end
 
     def self.register_setting(setting)
