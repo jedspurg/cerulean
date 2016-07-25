@@ -27,5 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'minitest'
   spec.add_development_dependency 'activerecord', '>= 4.0'
+  spec.add_development_dependency 'activesupport', '>= 4.0'
   spec.add_development_dependency 'pg'
 end
