@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Tony Drake']
   spec.email         = ['t27duck@gmail.com']
 
-  spec.summary       = %q{Quick record-specific configuration for your models}
+  spec.summary       = 'Quick record-specific configuration for your models'
   spec.description   = <<-DESC
     Allows you to include and organize configuration options for each record in
     a model without the need of complex joins to settings tables or constantly
@@ -19,9 +19,9 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
+  spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake', '~> 10.0'
