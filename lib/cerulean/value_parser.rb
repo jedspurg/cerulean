@@ -11,16 +11,5 @@ module Cerulean
         [true, 1].include?(value) || /\A(true|t|yes|y|1)\z/i === value
       end
     end
-
-    def self.invoke_chain?(value, chain_on)
-      case chain_on
-      when :blank
-        value.blank?
-      when :nil
-        value.nil?
-      when :false
-        value == false
-      end
-    end
   end
 end

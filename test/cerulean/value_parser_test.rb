@@ -22,31 +22,4 @@ class Cerulean::ValueParserTest < Minitest::Test
   def test_integer_is_parsed_to_a_string
     assert_equal '4', Cerulean::ValueParser.parse(4, :string)
   end
-
-  def test_invoke_chain_processes_for_blank_checks
-    assert_equal true, Cerulean::ValueParser.invoke_chain?('', :blank)
-    assert_equal true, Cerulean::ValueParser.invoke_chain?(nil, :blank)
-    assert_equal true, Cerulean::ValueParser.invoke_chain?(false, :blank)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?('x', :blank)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?(2, :blank)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?(true, :blank)
-  end
-
-  def test_invoke_chain_processes_for_nil_checks
-    assert_equal true, Cerulean::ValueParser.invoke_chain?(nil, :nil)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?('', :nil)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?(false, :nil)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?('x', :nil)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?(2, :nil)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?(true, :nil)
-  end
-
-  def test_invoke_chain_processes_for_false_checks
-    assert_equal true, Cerulean::ValueParser.invoke_chain?(false, :false)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?(nil, :false)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?('', :false)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?('x', :false)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?(2, :false)
-    assert_equal false, Cerulean::ValueParser.invoke_chain?(true, :false)
-  end
 end
