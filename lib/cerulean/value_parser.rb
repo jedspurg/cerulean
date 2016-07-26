@@ -8,7 +8,7 @@ module Cerulean
       when :integer
         value.present? ? value.to_i : nil
       when :boolean
-        [true, 1].include?(value) || /\A(true|t|yes|y|1)\z/i === value
+        /\A(true|t|yes|y|1)\z/i === value.to_s
       end
     end
   end
