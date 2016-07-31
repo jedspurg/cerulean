@@ -1,6 +1,6 @@
 module Cerulean
   class ActiveRecordProcessor
-    def initalize(model)
+    def initialize(model)
       @model = model
     end
 
@@ -19,8 +19,8 @@ module Cerulean
       data          = cerulean_column_data
       parsed_value  = Cerulean::ValueParser.parse(value, setting.type)
 
-      if data[name] != parsed_value
-        data[name] = parsed_value
+      if data[setting.name] != parsed_value
+        data[setting.name] = parsed_value
         @model.write_attribute(cerulean_column, data)
         @model.public_send("#{cerulean_column}_will_change!")
       end

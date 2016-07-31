@@ -1,10 +1,11 @@
 class BasicModel < ActiveRecord::Base
-  serialize :prefs
-  include HasConfig::ActiveRecordModel
-  self.config_column = :prefs
+  #serialize :prefs
+  serialize :configuration
+  include Cerulean::ActiveRecordModel
+  #self.config_column = :prefs
 
-  has_config :favorite_color
-  has_config :enable_email
-  has_config :rate_limit
+  cerulean_config :string_setting
+  cerulean_config :boolean_setting
+  cerulean_config :integer_setting
 end
 

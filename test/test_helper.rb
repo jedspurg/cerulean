@@ -8,3 +8,6 @@ require 'minitest/pride'
 MiniTest::Test = MiniTest::Unit::TestCase unless defined?(MiniTest::Test)
 
 require 'active_record'
+require 'pg'
+
+ActiveRecord::Base.establish_connection(adapter: 'postgresql', database: 'cerulean_test')
