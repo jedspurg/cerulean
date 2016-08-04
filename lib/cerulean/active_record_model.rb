@@ -1,5 +1,7 @@
 module Cerulean
   module ActiveRecordModel
+    DEFAULT_CONFIGURATION_COLUMN = 'configuration'.freeze
+
     def self.included(base)
       base.extend ClassMethods
     end
@@ -19,10 +21,10 @@ module Cerulean
       end
 
       def cerulean_configuration_column
-        @cerulean_configuration_column ||= 'configuration'
+        @cerulean_configuration_column ||= DEFAULT_CONFIGURATION_COLUMN
       end
 
-      def cerulean_configuraion_column=(column_name)
+      def cerulean_configuration_column=(column_name)
         @cerulean_configuration_column = column_name.to_s
       end
 
