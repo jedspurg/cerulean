@@ -8,7 +8,7 @@ module Cerulean
     def initialize(name, type, default: nil, validations: [], chain_on: :blank)
       @chain_on     = chain_on.to_sym
       @default      = default
-      @name         = name.to_sym
+      @name         = name.to_s
       @type         = type.to_sym
       @validations  = [validations].flatten
       validate_setting

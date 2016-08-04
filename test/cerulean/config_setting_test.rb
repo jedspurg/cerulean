@@ -10,7 +10,7 @@ class Cerulean::ConfigSettingTest < Minitest::Test
 
   def test_config_setting_only_needs_name_and_type_and_sets_defaults
     setting = Cerulean::ConfigSetting.new(@name, @type)
-    assert_equal @name.to_sym, setting.name
+    assert_equal @name, setting.name
     assert_equal @type.to_sym, setting.type
     assert_equal :blank, setting.chain_on
     assert_equal nil, setting.default

@@ -16,3 +16,11 @@ class CustomColumnModel < ActiveRecord::Base
   cerulean_config :boolean_setting
   cerulean_config :integer_setting
 end
+
+class JsonColumnModel < ActiveRecord::Base
+  include Cerulean::ActiveRecordModel
+
+  cerulean_config :string_setting
+  cerulean_config :boolean_setting
+  cerulean_config :integer_setting
+end

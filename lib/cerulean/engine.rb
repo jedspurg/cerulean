@@ -17,7 +17,7 @@ module Cerulean
     end
 
     def self.register_setting(setting)
-      known_settings[setting.name] = setting
+      known_settings[setting.name.to_sym] = setting
     end
 
     def self.clear_settings

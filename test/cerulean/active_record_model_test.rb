@@ -8,11 +8,13 @@ class Cerulean::ActiveRecordModelTest < Minitest::Test
   def test_model_uses_configuration_column
     assert_equal Cerulean::ActiveRecordModel::DEFAULT_CONFIGURATION_COLUMN, BasicModel.cerulean_configuration_column
     assert_equal 'prefs', CustomColumnModel.cerulean_configuration_column
+    assert_equal Cerulean::ActiveRecordModel::DEFAULT_CONFIGURATION_COLUMN, JsonColumnModel.cerulean_configuration_column
   end
 
   def test_model_resonds_to_getters
     [
       BasicModel.new,
+      JsonColumnModel.new,
       CustomColumnModel.new
     ].each do |model|
       %w(string_setting integer_setting boolean_setting).each do |s|
@@ -24,6 +26,7 @@ class Cerulean::ActiveRecordModelTest < Minitest::Test
   def test_model_resonds_to_setters
     [
       BasicModel.new,
+      JsonColumnModel.new,
       CustomColumnModel.new
     ].each do |model|
       %w(string_setting integer_setting boolean_setting).each do |s|
@@ -36,6 +39,7 @@ class Cerulean::ActiveRecordModelTest < Minitest::Test
     attrs = { string_setting: 'string', integer_setting: 2, boolean_setting: true }
     [
       BasicModel.new(attrs),
+      JsonColumnModel.new(attrs),
       CustomColumnModel.new(attrs)
     ].each do |model|
       assert_equal 'string', model.string_setting
@@ -48,6 +52,7 @@ class Cerulean::ActiveRecordModelTest < Minitest::Test
     attrs = { string_setting: 'string', integer_setting: 2, boolean_setting: true }
     [
       BasicModel.create!(attrs),
+      JsonColumnModel.create!(attrs),
       CustomColumnModel.create!(attrs)
     ].each do |model|
       assert_equal 'string', model.string_setting
@@ -59,6 +64,7 @@ class Cerulean::ActiveRecordModelTest < Minitest::Test
   def test_update_attributes_updates_the_settings
     [
       BasicModel.new,
+      JsonColumnModel.new,
       CustomColumnModel.new
     ].each do |model|
       assert_equal nil, model.string_setting
