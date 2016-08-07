@@ -8,7 +8,7 @@ module Cerulean
       local = local_value(cerulean_column_data, setting)
 
       if parent && mode == :resolve && Cerulean::Chain.invoke?(local, setting.chain_on)
-        parent_value = public_send(parent).public_send(setting.name, :resolve)
+        parent_value = @model.public_send(parent).public_send(setting.name, :resolve)
         return parent_value unless parent_value.blank?
       end
 

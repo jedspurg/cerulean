@@ -11,6 +11,31 @@ class Cerulean::ActiveRecordModelTest < Minitest::Test
     assert_equal Cerulean::ActiveRecordModel::DEFAULT_CONFIGURATION_COLUMN, JsonColumnModel.cerulean_configuration_column
   end
 
+  def test_chaining_models_use_their_local_values
+    client  = Client.create!(chained_integer: 3)
+    group   = Group.create!(chained_integer: 2, client: client)
+    user    = User.create!(chained_integer: 1, group: group)
+    assert_equal 3, client.chained_integer
+    assert_equal 2, group.chained_integer
+    assert_equal 1, user.chained_integer
+  end
+
+  def test_chaining_models_chain_up_if_blank_and_told_to
+    client  = Client.create!(chained_integer: 3)
+    group   = Group.create!(chained_integer: nil, client: client)
+    user    = User.create!(chained_integer: '', group: group)
+    assert_equal 3, client.chained_integer(:resolve)
+    assert_equal 3, client.chained_integer
+
+    assert_equal nil, group.chained_integer
+    assert_equal 3, group.chained_integer(:resolve)
+    assert_equal 3, user.chained_integer(:resolve)
+
+    user.update_attributes!(chained_integer: 1)
+    assert_equal 1, user.chained_integer
+    assert_equal 1, user.chained_integer(:resolve)
+  end
+
   def test_model_resonds_to_getters
     [
       BasicModel.new,

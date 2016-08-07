@@ -12,4 +12,18 @@ ActiveRecord::Schema.define do
   create_table :json_column_models, force: true do |t|
     t.json :configuration
   end
+
+  create_table :clients, force: true do |t|
+    t.json :configuration
+  end
+
+  create_table :groups, force: true do |t|
+    t.integer :client_id
+    t.json :configuration
+  end
+
+  create_table :users, force: true do |t|
+    t.integer :group_id
+    t.json :configuration
+  end
 end
