@@ -1,14 +1,14 @@
 require 'test_helper'
 
-class Cerulean::ActiveRecordModelTest < Minitest::Test
-  Cerulean::Engine.load(path: File.expand_path("../../config/cerulean_settings.rb", __FILE__))
+class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
+  Cerulean::Engine.load(path: File.expand_path("../../../config/cerulean_settings.rb", __FILE__))
   require 'schema'
   require 'models'
 
   def test_model_uses_configuration_column
-    assert_equal Cerulean::ActiveRecordModel::DEFAULT_CONFIGURATION_COLUMN, BasicModel.cerulean_configuration_column
+    assert_equal Cerulean::ActiveRecord::ModelAdapter::DEFAULT_CONFIGURATION_COLUMN, BasicModel.cerulean_configuration_column
     assert_equal 'prefs', CustomColumnModel.cerulean_configuration_column
-    assert_equal Cerulean::ActiveRecordModel::DEFAULT_CONFIGURATION_COLUMN, JsonColumnModel.cerulean_configuration_column
+    assert_equal Cerulean::ActiveRecord::ModelAdapter::DEFAULT_CONFIGURATION_COLUMN, JsonColumnModel.cerulean_configuration_column
   end
 
   def test_chaining_models_use_their_local_values
