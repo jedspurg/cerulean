@@ -1,5 +1,5 @@
 module Cerulean
-  class ConfigSetting
+  class SettingConfiguration
     CHAINING_OPTIONS  = %i(blank nil false).freeze
     VALID_TYPES       = %i(string integer boolean).freeze
 
