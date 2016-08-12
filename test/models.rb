@@ -34,6 +34,14 @@ class JsonColumnModel < ActiveRecord::Base
   cerulean_setting :integer_setting
 end
 
+class JsonbColumnModel < ActiveRecord::Base
+  include Cerulean::ActiveRecord::ModelAdapter
+
+  cerulean_setting :string_setting
+  cerulean_setting :boolean_setting
+  cerulean_setting :integer_setting
+end
+
 class Client < ActiveRecord::Base
   has_many :groups
   include Cerulean::ActiveRecord::ModelAdapter

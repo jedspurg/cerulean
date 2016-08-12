@@ -13,6 +13,10 @@ ActiveRecord::Schema.define do
     t.json :configuration
   end
 
+  create_table :jsonb_column_models, force: true do |t|
+    t.jsonb :configuration
+  end
+
   create_table :clients, force: true do |t|
     t.json :configuration
   end

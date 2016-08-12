@@ -55,6 +55,7 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
     [
       BasicModel.new,
       JsonColumnModel.new,
+      JsonbColumnModel.new,
       CustomColumnModel.new
     ].each do |model|
       %w(string_setting integer_setting boolean_setting).each do |s|
@@ -67,6 +68,7 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
     [
       BasicModel.new,
       JsonColumnModel.new,
+      JsonbColumnModel.new,
       CustomColumnModel.new
     ].each do |model|
       %w(string_setting integer_setting boolean_setting).each do |s|
@@ -80,6 +82,7 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
     [
       BasicModel.new(attrs),
       JsonColumnModel.new(attrs),
+      JsonbColumnModel.new(attrs),
       CustomColumnModel.new(attrs)
     ].each do |model|
       assert_equal 'string', model.string_setting
@@ -93,6 +96,7 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
     [
       BasicModel.create!(attrs),
       JsonColumnModel.create!(attrs),
+      JsonbColumnModel.create!(attrs),
       CustomColumnModel.create!(attrs)
     ].each do |model|
       assert_equal 'string', model.string_setting
@@ -105,6 +109,7 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
     [
       BasicModel.new,
       JsonColumnModel.new,
+      JsonbColumnModel.new,
       CustomColumnModel.new
     ].each do |model|
       assert_equal nil, model.string_setting
