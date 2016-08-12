@@ -15,12 +15,15 @@ module Cerulean
         def cerulean_setting(key, parent: nil, config: {})
           setting = Cerulean::Engine.known_settings[key.to_sym]
           if config.present?
-            setting ||= Cerulean::SettingConfiguration.new(
-              key.to_sym,
-              config.delete(:type),
-              config
-            )
-            setting = Cerulean::SettingConfiguration.modify(setting, config)
+            setting = if setting.nil?
+                        Cerulean::SettingConfiguration.new(
+                          key.to_sym,
+                          config.delete(:type),
+                          config
+                        )
+                      else
+                        Cerulean::SettingConfiguration.modify(setting, config)
+                      end
           end
           raise Cerulean::UnknownConfig, "Unknown config #{key}" if setting.nil?
 
