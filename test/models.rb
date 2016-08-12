@@ -5,6 +5,14 @@ class BasicModel < ActiveRecord::Base
   cerulean_setting :string_setting
   cerulean_setting :boolean_setting
   cerulean_setting :integer_setting
+end
+
+class ManualSettingModel < ActiveRecord::Base
+  self.table_name = 'basic_models'
+  serialize :configuration
+  include Cerulean::ActiveRecord::ModelAdapter
+
+  cerulean_setting :string_setting, config: { default: 'custom' }
   cerulean_setting :manual_setting, config: { type: :string, default: 'manual' }
 end
 

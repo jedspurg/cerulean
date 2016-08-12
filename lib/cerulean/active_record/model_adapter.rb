@@ -14,14 +14,15 @@ module Cerulean
       module ClassMethods
         def cerulean_setting(key, parent: nil, config: {})
           setting = Cerulean::Engine.known_settings[key.to_sym]
-          if setting.nil? && !config.nil?
-            setting = Cerulean::SettingConfiguration.new(
+          if config.present?
+            setting ||= Cerulean::SettingConfiguration.new(
               key.to_sym,
               config.delete(:type),
               config
             )
+            setting = Cerulean::SettingConfiguration.modify(setting, config)
           end
-          raise Cerulean::UnknownConfig, "No setting found for #{key}" if setting.nil?
+          raise Cerulean::UnknownConfig, "Unknown config #{key}" if setting.nil?
 
           define_cerulean_getter(setting, parent: parent)
           define_cerulean_setter(setting)

@@ -1,9 +1,20 @@
 module Cerulean
   class SettingConfiguration
     CHAINING_OPTIONS  = %i(blank nil false).freeze
+    MODIFIABLE_ATTRS  = %i(chain_on default validations).freeze
     VALID_TYPES       = %i(string integer boolean).freeze
 
-    attr_reader :chain_on, :default, :name, :type, :validations
+    attr_reader :name, :type
+    attr_accessor(*MODIFIABLE_ATTRS)
+
+    def self.modify(setting, config)
+      setting = setting.dup
+      MODIFIABLE_ATTRS.each do |key|
+        setting.public_send("#{key}=", config[key]) if config.key?(key)
+      end
+      setting.validate
+      setting
+    end
 
     def initialize(name, type, default: nil, validations: [], chain_on: :blank)
       @chain_on     = chain_on.to_sym
@@ -11,6 +22,10 @@ module Cerulean
       @name         = name.to_s
       @type         = type.to_sym
       @validations  = [validations].flatten
+      validate
+    end
+
+    def validate
       validate_setting
       validate_chain_on
     end
