@@ -36,6 +36,15 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
     assert_equal 1, user.chained_integer(:resolve)
   end
 
+  def test_model_with_manually_configured_setting_works_like_normal
+    model = BasicModel.new
+    assert_equal 'manual', model.manual_setting
+    model.manual_setting = 'foo'
+    assert_equal 'foo', model.manual_setting
+    model.save!
+    assert_equal 'foo', model.manual_setting
+  end
+
   def test_model_resonds_to_getters
     [
       BasicModel.new,

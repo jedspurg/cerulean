@@ -5,6 +5,7 @@ class BasicModel < ActiveRecord::Base
   cerulean_setting :string_setting
   cerulean_setting :boolean_setting
   cerulean_setting :integer_setting
+  cerulean_setting :manual_setting, config: { type: :string, default: 'manual' }
 end
 
 class CustomColumnModel < ActiveRecord::Base
