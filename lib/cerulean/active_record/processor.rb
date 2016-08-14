@@ -22,7 +22,7 @@ module Cerulean
 
         if data[setting.name] != parsed_value
           data[setting.name] = parsed_value
-          @model.write_attribute(cerulean_column, data)
+          @model.send(:write_attribute, cerulean_column, data)
           @model.public_send("#{cerulean_column}_will_change!")
         end
       end
