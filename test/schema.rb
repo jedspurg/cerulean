@@ -14,7 +14,12 @@ ActiveRecord::Schema.define do
   end
 
   create_table :jsonb_column_models, force: true do |t|
-    t.jsonb :configuration
+    # JSONB support was added in Rails 4.2
+    if ActiveRecord.version >= Gem::Version.new('4.2.0')
+      t.jsonb :configuration
+    else
+      t.json :configuration
+    end
   end
 
   create_table :clients, force: true do |t|
