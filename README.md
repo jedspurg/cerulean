@@ -43,20 +43,20 @@ end
 
 If you are using PostgreSQL 9.2 or later, you can use the JSON or JSONB (if using Rails 4.2 or later) data-type for the configuration column and not have to declare it as a serilaized attribute in the model as `ActiveRecord` will take care of that for you.
 
-If you want to use a different column name, you may override the default by setting `self.cerulean_configuration_column = 'other_column_name'` in the model.
+If you want to use a different column name, you may override the default by setting `self.cerulean_settinguration_column = 'other_column_name'` in the model.
 
 ```ruby
 class Client < ActiveRecord::Base
   serialize :configuration, Hash
   include Cerulean::ActiveRecord::ModelAdapter
-  cerulean_config :primary_color, config: { type: :string, default: 'green' }
-  cerulean_config :secondary_color, config: { type: :string }
-  cerulean_config :rate_limit, config: { type: :integer, validations: { numericality: { only_integer: true } } }
-  cerulean_config :category, config: { type: :string, validations: { inclusion: { in: CATEGORIES } } }
-  cerulean_config :active, config: { type: :boolean, default: false }
+  cerulean_setting :primary_color, config: { type: :string, default: 'green' }
+  cerulean_setting :secondary_color, config: { type: :string }
+  cerulean_setting :rate_limit, config: { type: :integer, validations: { numericality: { only_integer: true } } }
+  cerulean_setting :category, config: { type: :string, validations: { inclusion: { in: CATEGORIES } } }
+  cerulean_setting :active, config: { type: :boolean, default: false }
 end
 ```
-The `cerulean_config` method is the primary interface for adding a setting to a model. The first argument is a symbol that represents the name of the setting.
+The `cerulean_setting` method is the primary interface for adding a setting to a model. The first argument is a symbol that represents the name of the setting.
 
 The `config` key is a hash that contains information describing your setting. The `type` is the only required key when including the `config` option.
 
@@ -106,7 +106,45 @@ client.errors.full_messages
 
 Everything acts pretty much as you'd expect it too do. Configurations that fail validations make the record invalid. Passing in '1', 'true', `true`, etc casts boolean values. Passing in an empty string for an integer config casts as `nil`.
 
-TODO: Explain chaining and configuration file
+## Chaining with other models with the same setting
+
+TODO: Explain this
+
+## Configuration file
+
+An alternative to defining the definition of each setting in your model is to put them in a centralized configuration file.
+
+Giving a file located at `#{Rails.root}/config/cerulean_settings.rb`:
+
+````
+setting :primary_color, :string, default: 'green'
+setting :secondary_color, :string
+setting :rate_limit, :integer, validations: { numericality: { only_integer: true } }
+setting :category, :string, validations: { inclusion: { in: CATEGORIES } }
+setting :active, :boolean, default: false
+````
+
+... and then somewhere in your app, call `Cerulean::Engine.load` (There's an optional `path:` argument to specify a different file path)
+
+This will load up pre-configured setting information in your app. You can then just refer to each setting by name in your model:
+
+```ruby
+class Client < ActiveRecord::Base
+  serialize :configuration, Hash
+  include Cerulean::ActiveRecord::ModelAdapter
+  cerulean_setting :primary_color
+  cerulean_setting :secondary_color
+  cerulean_setting :rate_limit
+  cerulean_setting :category
+  cerulean_setting :active
+end
+```
+
+You can also override the `default` and `validations` settings for a pre-defined configuration:
+
+```ruby
+cerulean_setting :primary_color, config: { default: 'custom_value_unique_to_this_model' }
+```
 
 ## Development
 
