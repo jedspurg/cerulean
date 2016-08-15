@@ -51,7 +51,7 @@ end
 
 If you are using PostgreSQL 9.2 or later, you can use the JSON or JSONB (if using Rails 4.2 or later) data-type for the configuration column and not have to declare it as a serilaized attribute in the model as `ActiveRecord` will take care of that for you.
 
-If you want to use a different column name, you may override the default by setting `self.cerulean_settinguration_column = 'other_column_name'` in the model.
+If you want to use a different column name, you may override the default by setting `self.cerulean_configuration_column = 'other_column_name'` in the model.
 
 ```ruby
 class Client < ActiveRecord::Base
