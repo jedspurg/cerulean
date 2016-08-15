@@ -9,6 +9,7 @@ module Cerulean
         local = local_value(cerulean_column_data, setting)
 
         if parent && mode == :resolve && Cerulean::Chain.invoke?(local, setting.chain_on)
+          check_chain(setting, parent)
           parent_value = @model.public_send(parent).public_send(setting.name, :resolve)
           return parent_value unless parent_value.blank?
         end
@@ -42,6 +43,16 @@ module Cerulean
           setting.default
         else
           data[setting.name]
+        end
+      end
+
+      def check_chain(setting, parent)
+        unless @model.respond_to?(parent)
+          raise Cerulean::InvalidChain, "#{parent} is not available on this model"
+        end
+
+        unless @model.public_send(parent).respond_to?(setting.name)
+          raise Cerulean::InvalidChain, "#{setting.name} not available on #{parent}"
         end
       end
     end

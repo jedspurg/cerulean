@@ -5,6 +5,10 @@ class BasicModel < ActiveRecord::Base
   cerulean_setting :string_setting
   cerulean_setting :boolean_setting
   cerulean_setting :integer_setting
+
+  def bad_parent_method
+    nil
+  end
 end
 
 class ManualSettingModel < ActiveRecord::Base
