@@ -116,7 +116,67 @@ Everything acts pretty much as you'd expect it too do. Configurations that fail 
 
 ## Chaining with other models with the same setting
 
-TODO: Explain this
+Let's say you have a `Client` model, a `Group` model, and a `User` model. A client has many groups and a group can have many users. A client can have configuration which globally affects all users; however, a group setting of the same name could override the global setting. Cerulean can handle this with relative ease.
+
+First, let's set up the models
+
+```ruby
+class Client < ActiveRecord::Base
+  has_many :groups
+  # ...
+  cerulean_setting :some_setting, config: { type: :integer, default: 3 }
+end
+
+
+class Group < ActiveRecord::Base
+  belongs_to :client
+  has_many :users
+
+  # ...
+  cerulean_setting :some_setting, config: { type: :integer }, parent: :client
+end
+````
+
+This introduces a new option for the `cerulean_setting` method: `parent`. The `parent` option specifies a method `Cerulean` can use to defer the setting value to another object.
+
+Assume we have a client and a group stored in our database:
+
+```irb
+g = Group.first
+=> #<Group ...>
+g.client
+=> <#Client ...>
+g.some_setting
+=> nil
+g.some_setting(:resolve)
+=> 3
+g.some_setting = 1
+=> 1
+g.some_setting(:resolve)
+=> 1
+g.some_setting = nil
+=> nil
+g.some_setting(:resolve)
+=> 3
+```
+
+See what happened? Note the subtle change in how we reference the setting?
+
+When we pass the symbol `:resolve` into the setting's getter method, and is blank, we will defer to the setting in the parent (in this case, `Client`) and use that value. If you do not pass `:resolve` in the getter, the local value will be used.
+
+By default, `Cerulean` will go up the chain if the child model's value is `blank` (from `ActiveSupport`'s `blank?` method).
+
+You do have some control over when `Cerulean` invokes the change via the `chain_on` option for the setting's config:
+
+```ruby
+# Chain will be invoked if the local value is `nil`
+cerulean_setting :setting1, config: { type: :string, chain_on: :nil }, parent: :some_method
+
+# Chain will be invoked if the local value is `false`
+cerulean_setting :setting2, config: { type: :string, chain_on: :false }, parent: :some_other_method
+```
+
+You can chain as deep as you want as long as the object returned from `parent` includes a setting of the same name as the child. Meaning, your `User` model can chain `some_setting` up to `group` which can chain up to `client`.
 
 ## Configuration file
 
