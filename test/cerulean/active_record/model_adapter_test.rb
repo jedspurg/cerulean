@@ -54,6 +54,8 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
   def test_model_resonds_to_getters
     [
       BasicModel.new,
+      ParentModel.new,
+      ChildModel.new,
       JsonColumnModel.new,
       JsonbColumnModel.new,
       CustomColumnModel.new
@@ -67,6 +69,8 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
   def test_model_resonds_to_setters
     [
       BasicModel.new,
+      ParentModel.new,
+      ChildModel.new,
       JsonColumnModel.new,
       JsonbColumnModel.new,
       CustomColumnModel.new
@@ -81,6 +85,8 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
     attrs = { string_setting: 'string', integer_setting: 2, boolean_setting: true }
     [
       BasicModel.new(attrs),
+      ParentModel.new(attrs),
+      ChildModel.new(attrs),
       JsonColumnModel.new(attrs),
       JsonbColumnModel.new(attrs),
       CustomColumnModel.new(attrs)
@@ -96,6 +102,8 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
     attrs = { string_setting: 'string', integer_setting: 2, boolean_setting: true }
     [
       BasicModel.create!(attrs),
+      ParentModel.create!(attrs),
+      ChildModel.create!(attrs),
       JsonColumnModel.create!(attrs),
       JsonbColumnModel.create!(attrs),
       CustomColumnModel.create!(attrs)
@@ -110,6 +118,8 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
   def test_update_attributes_updates_the_settings
     [
       BasicModel.new,
+      ParentModel.new,
+      ChildModel.new,
       JsonColumnModel.new,
       JsonbColumnModel.new,
       CustomColumnModel.new

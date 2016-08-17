@@ -5,6 +5,11 @@ ActiveRecord::Schema.define do
     t.text :configuration
   end
 
+  create_table :parent_models, force: true do |t|
+    t.string :type
+    t.text :configuration
+  end
+
   create_table :custom_column_models, force: true do |t|
     t.text :prefs
   end

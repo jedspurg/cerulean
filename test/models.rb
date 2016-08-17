@@ -64,3 +64,15 @@ class User < ActiveRecord::Base
   include Cerulean::ActiveRecord::ModelAdapter
   cerulean_setting :chained_integer, parent: :group
 end
+
+class ParentModel < ActiveRecord::Base
+  serialize :configuration
+  include Cerulean::ActiveRecord::ModelAdapter
+
+  cerulean_setting :string_setting
+  cerulean_setting :boolean_setting
+  cerulean_setting :integer_setting
+end
+
+class ChildModel < ParentModel
+end
