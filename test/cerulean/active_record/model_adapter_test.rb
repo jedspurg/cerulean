@@ -58,7 +58,7 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
       JsonbColumnModel.new,
       CustomColumnModel.new
     ].each do |model|
-      %w(string_setting integer_setting boolean_setting).each do |s|
+      %w(string_setting integer_setting boolean_setting boolean_setting?).each do |s|
         assert model.respond_to?(s.to_sym)
       end
     end
@@ -88,6 +88,7 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
       assert_equal 'string', model.string_setting
       assert_equal 2, model.integer_setting
       assert_equal true, model.boolean_setting
+      assert_equal true, model.boolean_setting?
     end
   end
 
@@ -102,6 +103,7 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
       assert_equal 'string', model.string_setting
       assert_equal 2, model.integer_setting
       assert_equal true, model.boolean_setting
+      assert_equal true, model.boolean_setting?
     end
   end
 
@@ -115,10 +117,12 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
       assert_equal nil, model.string_setting
       assert_equal nil, model.integer_setting
       assert_equal nil, model.boolean_setting
+      assert_equal nil, model.boolean_setting?
       model.update_attributes!(string_setting: 'string', integer_setting: 2, boolean_setting: true)
       assert_equal 'string', model.string_setting
       assert_equal 2, model.integer_setting
       assert_equal true, model.boolean_setting
+      assert_equal true, model.boolean_setting?
     end
   end
 end

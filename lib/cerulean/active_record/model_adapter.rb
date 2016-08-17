@@ -49,7 +49,7 @@ module Cerulean
 
           if setting.type == :boolean
             define_method("#{setting.name}?") do |mode = :none|
-              public_send(name, mode)
+              public_send(setting.name, mode)
             end
           end
         end
