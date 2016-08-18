@@ -135,4 +135,10 @@ class Cerulean::ActiveRecord::ModelAdapterTest < Minitest::Test
       assert_equal true, model.boolean_setting?
     end
   end
+
+  def test_model_with_validation_triggers_validation
+    model = WithValidationModel.new
+    refute model.valid?
+    assert model.errors[:string_setting].present?
+  end
 end

@@ -20,6 +20,14 @@ class ManualSettingModel < ActiveRecord::Base
   cerulean_setting :manual_setting, config: { type: :string, default: 'manual' }
 end
 
+class WithValidationModel < ActiveRecord::Base
+  self.table_name = 'basic_models'
+  serialize :configuration
+  include Cerulean::ActiveRecord::ModelAdapter
+
+  cerulean_setting :string_setting, config: { type: :string, validations: { presence: true } }
+end
+
 class CustomColumnModel < ActiveRecord::Base
   serialize :prefs
   include Cerulean::ActiveRecord::ModelAdapter

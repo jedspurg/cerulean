@@ -62,7 +62,7 @@ module Cerulean
         end
 
         def apply_cerulean_validations(setting)
-          setting.validations.each do |validation|
+          [setting.validations].flatten.each do |validation|
             validates setting.name, validation
           end
         end
