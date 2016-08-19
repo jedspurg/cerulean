@@ -12,7 +12,7 @@ module Cerulean
       end
 
       module ClassMethods
-        def cerulean_setting(key, parent: nil, config: {})
+        def setting(key, parent: nil, config: {})
           setting = Cerulean::Engine.known_settings[key.to_sym]
           if config.present?
             setting = if setting.nil?

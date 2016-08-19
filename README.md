@@ -57,14 +57,14 @@ If you want to use a different column name, you may override the default by sett
 class Client < ActiveRecord::Base
   serialize :configuration, Hash
   include Cerulean::ActiveRecord::ModelAdapter
-  cerulean_setting :primary_color, config: { type: :string, default: 'green' }
-  cerulean_setting :secondary_color, config: { type: :string }
-  cerulean_setting :rate_limit, config: { type: :integer, validations: { numericality: { only_integer: true } } }
-  cerulean_setting :category, config: { type: :string, validations: { inclusion: { in: CATEGORIES } } }
-  cerulean_setting :active, config: { type: :boolean, default: false }
+  setting :primary_color, config: { type: :string, default: 'green' }
+  setting :secondary_color, config: { type: :string }
+  setting :rate_limit, config: { type: :integer, validations: { numericality: { only_integer: true } } }
+  setting :category, config: { type: :string, validations: { inclusion: { in: CATEGORIES } } }
+  setting :active, config: { type: :boolean, default: false }
 end
 ```
-The `cerulean_setting` method is the primary interface for adding a setting to a model. The first argument is a symbol that represents the name of the setting.
+The `setting` method is the primary interface for adding a setting to a model. The first argument is a symbol that represents the name of the setting.
 
 The `config` key is a hash that contains information describing your setting. The `type` is the only required key when including the `config` option.
 
@@ -124,7 +124,7 @@ First, let's set up the models
 class Client < ActiveRecord::Base
   has_many :groups
   # ...
-  cerulean_setting :some_setting, config: { type: :integer, default: 3 }
+  setting :some_setting, config: { type: :integer, default: 3 }
 end
 
 
@@ -133,11 +133,11 @@ class Group < ActiveRecord::Base
   has_many :users
 
   # ...
-  cerulean_setting :some_setting, config: { type: :integer }, parent: :client
+  setting :some_setting, config: { type: :integer }, parent: :client
 end
 ````
 
-This introduces a new option for the `cerulean_setting` method: `parent`. The `parent` option specifies a method `Cerulean` can use to defer the setting value to another object.
+This introduces a new option for the `setting` method: `parent`. The `parent` option specifies a method `Cerulean` can use to defer the setting value to another object.
 
 Assume we have a client and a group stored in our database:
 
@@ -170,10 +170,10 @@ You do have some control over when `Cerulean` invokes the change via the `chain_
 
 ```ruby
 # Chain will be invoked if the local value is `nil`
-cerulean_setting :setting1, config: { type: :string, chain_on: :nil }, parent: :some_method
+setting :setting1, config: { type: :string, chain_on: :nil }, parent: :some_method
 
 # Chain will be invoked if the local value is `false`
-cerulean_setting :setting2, config: { type: :string, chain_on: :false }, parent: :some_other_method
+setting :setting2, config: { type: :string, chain_on: :false }, parent: :some_other_method
 ```
 
 You can chain as deep as you want as long as the object returned from `parent` includes a setting of the same name as the child. Meaning, your `User` model can chain `some_setting` up to `group` which can chain up to `client`.
@@ -182,7 +182,7 @@ You can chain as deep as you want as long as the object returned from `parent` i
 
 An alternative to defining the definition of each setting in your model is to put them in a centralized configuration file.
 
-Giving a file located at `#{Rails.root}/config/cerulean_settings.rb`:
+Giving a file located at `#{Rails.root}/config/settings.rb`:
 
 ````
 setting :primary_color, :string, default: 'green'
@@ -200,18 +200,18 @@ This will load up pre-configured setting information in your app. You can then j
 class Client < ActiveRecord::Base
   serialize :configuration, Hash
   include Cerulean::ActiveRecord::ModelAdapter
-  cerulean_setting :primary_color
-  cerulean_setting :secondary_color
-  cerulean_setting :rate_limit
-  cerulean_setting :category
-  cerulean_setting :active
+  setting :primary_color
+  setting :secondary_color
+  setting :rate_limit
+  setting :category
+  setting :active
 end
 ```
 
 You can also override the `default` and `validations` settings for a pre-defined configuration:
 
 ```ruby
-cerulean_setting :primary_color, config: { default: 'custom_value_unique_to_this_model' }
+setting :primary_color, config: { default: 'custom_value_unique_to_this_model' }
 ```
 
 ## Development
