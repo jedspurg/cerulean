@@ -1,8 +1,8 @@
 module Cerulean
   class Engine
     class SettingReader
-      def setting(name, type, options = {})
-        Engine.register_setting SettingConfiguration.new(name, type, options)
+      def setting(name, config: {})
+        Engine.register_setting SettingConfiguration.new(name, config)
       end
     end
 

@@ -1,5 +1,5 @@
-setting :string_setting, :string
-setting :boolean_setting, :boolean
-setting :integer_setting, :integer
+setting :string_setting, config: { type: :string }
+setting :boolean_setting, config: { type: :boolean }
+setting :integer_setting, config: { type: :integer }
 
-setting :chained_integer, :integer
+setting :chained_integer, config: { type: :integer }

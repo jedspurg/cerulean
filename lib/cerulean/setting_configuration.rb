@@ -16,7 +16,9 @@ module Cerulean
       setting
     end
 
-    def initialize(name, type, default: nil, validations: [], chain_on: :blank)
+    def initialize(name, type: nil, default: nil, validations: [], chain_on: :blank)
+      raise InvalidType, 'Type is required' if type.nil?
+
       @chain_on     = chain_on.to_sym
       @default      = default
       @name         = name.to_s

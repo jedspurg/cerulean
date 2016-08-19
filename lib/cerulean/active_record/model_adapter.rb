@@ -16,11 +16,7 @@ module Cerulean
           setting = Cerulean::Engine.known_settings[key.to_sym]
           if config.present?
             setting = if setting.nil?
-                        Cerulean::SettingConfiguration.new(
-                          key.to_sym,
-                          config.delete(:type),
-                          config
-                        )
+                        Cerulean::SettingConfiguration.new(key.to_sym, config)
                       else
                         Cerulean::SettingConfiguration.modify(setting, config)
                       end

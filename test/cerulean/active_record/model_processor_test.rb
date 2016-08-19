@@ -6,7 +6,7 @@ class Cerulean::ActiveRecord::ProcessorTest < Minitest::Test
   require 'models'
 
   def test_chaining_on_parent_that_does_not_exist_raises_an_error
-    setting = Cerulean::SettingConfiguration.new(:bad_chain, :string)
+    setting = Cerulean::SettingConfiguration.new(:bad_chain, type: :string)
     model = BasicModel.new
     processor = Cerulean::ActiveRecord::Processor.new(model)
     assert_raises Cerulean::InvalidChain do
@@ -15,7 +15,7 @@ class Cerulean::ActiveRecord::ProcessorTest < Minitest::Test
   end
 
   def test_chaining_on_parent_that_does_not_respond_to_setting_name_raises_an_error
-    setting = Cerulean::SettingConfiguration.new(:bad_chain, :string)
+    setting = Cerulean::SettingConfiguration.new(:bad_chain, type: :string)
     model = BasicModel.new
     assert model.respond_to?(:bad_parent_method), 'Basic model does not respond to bad_parent_method'
     processor = Cerulean::ActiveRecord::Processor.new(model)

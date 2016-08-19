@@ -185,11 +185,11 @@ An alternative to defining the definition of each setting in your model is to pu
 Giving a file located at `#{Rails.root}/config/settings.rb`:
 
 ````
-setting :primary_color, :string, default: 'green'
-setting :secondary_color, :string
-setting :rate_limit, :integer, validations: { numericality: { only_integer: true } }
-setting :category, :string, validations: { inclusion: { in: CATEGORIES } }
-setting :active, :boolean, default: false
+setting :primary_color, config: { type: :string, default: 'green' }
+setting :secondary_color, config: { type: :string }
+setting :rate_limit, config: { type: :integer, validations: { numericality: { only_integer: true } } }
+setting :category, config: { :string, validations: { inclusion: { in: CATEGORIES } } }
+setting :active, config: { type: :boolean, default: false }
 ````
 
 ... and then somewhere in your app, call `Cerulean::Engine.load` (There's an optional `path:` argument to specify a different file path)

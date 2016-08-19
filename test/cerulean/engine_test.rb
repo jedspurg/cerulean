@@ -32,8 +32,8 @@ class Cerulean::EngineTest < Minitest::Test
   def test_load_reads_a_file_and_stores_settings
     file = Tempfile.new(['cerulean-settings', '.rb'])
     File.open(file.path, 'w') do |f|
-      f.write("setting :#{@setting_name}_1, :string\n")
-      f.write("setting :#{@setting_name}_2, :string\n")
+      f.write("setting :#{@setting_name}_1, config: { type: :string }\n")
+      f.write("setting :#{@setting_name}_2, config: { type: :string }\n")
     end
     Cerulean::Engine.load(path: file.path)
     assert_equal 2, Cerulean::Engine.known_settings.size
